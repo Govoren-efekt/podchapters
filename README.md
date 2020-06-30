@@ -2,11 +2,12 @@
     echo "0:25:30" | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }'
 
 #### add chapters:
-    ffmpeg -i in.mp3 -i id3tags.txt -map_metadata 1 -c:a copy -id3v2_version 3 -write_id3v1 1 out.mp3
+    ffmpeg -i in.mp3 -i [id3tags.txt](id3tags.txt) -map_metadata 1 -c:a copy -id3v2_version 3 -write_id3v1 1 out.mp3
 
-#### use script chptr:
+#### use script [chptr](chptr):
 
-Put chapter data in a file (in the example below file is named _chapters_):
+Put chapter data in a file (in the example below file is named
+_[chapters](chapters)_):
 
     0:0:14  0:2:15  глава едно
     0:2:16  0:4:10  глава две
