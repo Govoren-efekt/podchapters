@@ -1,28 +1,3 @@
-#### id3tags.txt:
-
-    ;FFMETADATA1
-    title="Title"
-    artist=Artist
-    album_artist=Artist
-    album=Album
-    copyright=Copyright 2019
-    track=01
-    genre=(186)
-    date=2019
-    encoder=Lavf58.29.100
-
-    [CHAPTER]
-    TIMEBASE=1/1
-    START=0
-    END=330
-    title=chapter \#1
-
-    [CHAPTER]
-    TIMEBASE=1/1
-    START=330
-    END=1530
-    title=chapter \#2
-
 #### convert HH:MM:SS to SS
     echo "0:25:30" | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }'
 
