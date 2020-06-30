@@ -3,6 +3,7 @@
 
 #### add chapters:
 Chapter data and other metadatda in [id3tags.txt](id3tags.txt)
+
     ffmpeg -i in.mp3 -i id3tags.txt -map_metadata 1 -c:a copy -id3v2_version 3 -write_id3v1 1 out.mp3
 
 #### use script [chptr](chptr):
