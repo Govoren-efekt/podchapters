@@ -1,3 +1,5 @@
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U7U51VFGK)
+
 #### convert HH:MM:SS to SS
     echo "0:25:30" | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }'
 
