@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# parse command line agruments
+
+for arg in "$@"; do
+  key=$(echo $arg | cut -f1 -d=)
+  value=$(echo $arg | cut -f2 -d=)   
+  
+  case "$key" in
+    title) title=${value} ;;
+    artist) artist=${value} ;;     
+    copyright) copyright=${value} ;;
+    track) track=${value} ;;
+    pubdate) dat=${value} ;;
+    meta) meta=${value} ;;
+    mp3) mp3=${value};;
+    *)   
+  esac    
+done
+
+# write header (genre 186=Podcast)
+
+(
+cat <<META
+;FFMETADATA1
+title=${title}
+artist=${artist}
+copyright=${copyright}
+track=${track}
+genre=(186) 
+date=${dat}
+META
+) > metadata.txt
+
+# process chapter data 
+
+while read str end tit; do
+  #{ print ($1 * 3600) + ($2 * 60) + $3 }'
+  cstr=$(awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }' <(echo ${str}))
+  cend=$(awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }' <(echo ${end}))
+  
+(
+cat <<CHAPTER
+
+[CHAPTER]
+TIMEBASE=1/1
+START=${cstr}
+END=${cend}
+title=${tit}
+CHAPTER
+) >> metadata.txt
+done < "$meta"
+
+# write id3 tags
+
+ffmpeg -i ${mp3} -i metadata.txt -map_metadata 1 -c:a copy -id3v2_version 3 -write_id3v1 1 with_chapters.mp3
+rm metadata.txt
